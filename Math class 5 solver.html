@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Calculator 🎀</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        h2 {
+            color: #d63384;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #f8a5c2;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #ff6b81;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #d63384;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>🎀 Math Calculator 🎀</h2>
+
+        <label for="chapter">Select Chapter:</label>
+        <select id="chapter" onchange="showOptions()">
+            <option value="">-- Choose Chapter --</option>
+            <option value="11">Chapter 11 (Perimeter & Area)</option>
+            <option value="13">Chapter 13 (Multiplication)</option>
+            <option value="14">Chapter 14 (Volume)</option>
+        </select>
+
+        <div id="shapeOptions" style="display: none;">
+            <label for="shape">Choose Shape:</label>
+            <select id="shape">
+                <option value="rectangle">Rectangle</option>
+                <option value="square">Square</option>
+            </select>
+        </div>
+
+        <div id="inputs"></div>
+
+        <button onclick="calculate()">Calculate</button>
+
+        <div id="output" class="result"></div>
+    </div>
+
+    <script>
+        function showOptions() {
+            let chapter = document.getElementById("chapter").value;
+            let shapeOptions = document.getElementById("shapeOptions");
+            let inputs = document.getElementById("inputs");
+            inputs.innerHTML = "";
+            shapeOptions.style.display = "none";
+
+            if (chapter === "11") {
+                shapeOptions.style.display = "block";
+            } else if (chapter === "13") {
+                inputs.innerHTML = `
+                    <input type="number" id="num1" placeholder="Enter First Number">
+                    <input type="number" id="num2" placeholder="Enter Second Number">
+                `;
+            } else if (chapter === "14") {
+                inputs.innerHTML = `
+                    <label for="solid">Choose Solid:</label>
+                    <select id="solid">
+                        <option value="rectangular_prism">Rectangular Prism</option>
+                        <option value="cube">Cube</option>
+                    </select>
+                `;
+            }
+        }
+
+        function calculate() {
+            let chapter = document.getElementById("chapter").value;
+            let output = document.getElementById("output");
+            output.innerHTML = "";
+
+            if (chapter === "11") {
+                let shape = document.getElementById("shape").value;
+                if (shape === "rectangle") {
+                    let l = prompt("Enter Length:");
+                    let b = prompt("Enter Breadth:");
+                    let perimeter = 2 * (parseInt(l) + parseInt(b));
+                    let area = l * b;
+                    output.innerHTML = `📏 Perimeter of Rectangle: <b>${perimeter}</b> <br> 📐 Area of Rectangle: <b>${area}</b>`;
+                } else {
+                    let a = prompt("Enter Side Length:");
+                    let perimeter = 4 * a;
+                    let area = a * a;
+                    output.innerHTML = `🟦 Perimeter of Square: <b>${perimeter}</b> <br> 🔲 Area of Square: <b>${area}</b>`;
+                }
+
+            } else if (chapter === "13") {
+                let first = document.getElementById("num1").value;
+                let second = document.getElementById("num2").value;
+                let multiply = first * second;
+                output.innerHTML = `🔢 Product: <b>${multiply}</b>`;
+
+            } else if (chapter === "14") {
+                let solid = document.getElementById("solid").value;
+                if (solid === "rectangular_prism") {
+                    let l = prompt("Enter Length:");
+                    let b = prompt("Enter Breadth:");
+                    let h = prompt("Enter Height:");
+                    let volume = l * b * h;
+                    output.innerHTML = `📦 Volume of Rectangular Prism: <b>${volume}</b>`;
+                } else {
+                    let s = prompt("Enter Side Length:");
+                    let volume = s ** 3;
+                    output.innerHTML = `🎲 Volume of Cube: <b>${volume}</b>`;
+                }
+            } else {
+                output.innerHTML = `⚡ Chapter <b>${chapter}</b> is coming soon...`;
+            }
+        }
+    </script>
+
+</body>
+</html>
